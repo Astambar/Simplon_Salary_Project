@@ -1,0 +1,4 @@
+.venv
+__pycache__
+employes_data.json
+employes_data_test.json
