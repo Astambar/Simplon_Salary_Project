@@ -66,36 +66,98 @@ def calcul_stats_Enterprise(employes_data:dict):
     maximum_filial_salariale = float('-inf')  # Initialiser à -infini
     for filiale in employes_data:
         
-        max_base = employes_data[filiale]['StatisticFilial'][2]
-        min_base = employes_data[filiale]['StatisticFilial'][1]
+        max_base = employes_data[filiale]['StatisticFilial'][2]['maximum_salary']
+        min_base = employes_data[filiale]['StatisticFilial'][1]['salary_minimum']
         if maximum_filial_salariale < max_base: # max < max_base
             maximum_filial_salariale = max_base
         elif minimum_filial_salariale > min_base:
             minimum_filial_salariale = min_base
         count += 1
-        total += employes_data[filiale]['StatisticFilial'][0]
+        total += employes_data[filiale]['StatisticFilial'][0]['average_salary']
     if count > 0:
         moyen_filial_salariale = total / count
+        employes_data = {"Enterprise":[
+            {"Filial":employes_data},
+            {"EnterpriseStatistic":[
+                {"average_salary":moyen_filial_salariale},
+                {"salary_minimum":minimum_filial_salariale},
+                {"maximum_salary":maximum_filial_salariale}
+            ]}
+        ]}
+    else:
+        employes_data = {"Enterprise":[
+            {"Filial":employes_data},
+            {"EnterpriseStatistic":[
+            {"average_salary":moyen_filial_salariale},
+            {"salary_minimum":minimum_filial_salariale},
+            {"maximum_salary":maximum_filial_salariale}
+            ]}
+        ]}
+    return employes_data
         
-        
-    
-    
+def get_filiales(employe_data):
+    for enterprise in employe_data['Enterprise']:
+        if enterprise['Filial']:
+            return enterprise['Filial']
+def get_filiale(employe_data, name):
+    filiales = get_filiales(employe_data)
+    for filial in filiales:
+        if filiales[filial]:
+            return filiales[filial]
 
-{"Entreprise":{"Employer":{},}}
-def main():
-    employes_data = read_file_json('employes-data.json')
-    # print(employes_data['TechCorp'][0])
-    keys_primary = extract_primary_key(employes_data)
-    render_test = ""
+def get_filiale_employe(employe_data, name):
+    filiale = get_filiale(employe_data, name)
+    return filiale['Employes']
+def get_filiale_employe_info(employe_data, filiale, name_employe):
+    employees = get_filiale_employe(employe_data,filiale)
+    for employee in employees:
+        if employee['name'] == name_employe:
+            return employee
+def get_month_salary_employee(employe_data, filiale, name_employe):
+    infos_employe = get_filiale_employe_info(employe_data, filiale, name_employe)
+    for info in infos_employe:
+        if info == 'monthly_salary':
+            return infos_employe[info]       
+def get_statistic_filiale(employe_data, name_filiale):
+    filiale = get_filiale(employe_data, name_filiale)
+    return filiale['StatisticFilial']
+def get_average_filiale(employe_data, name_filiale):
+    return get_focus_info_filiale(employe_data, name_filiale, 'average_salary')
+def get_focus_info_filiale(employe_data, name_filiale, name_data_stat):
+    infos_filiale = get_statistic_filiale(employe_data, name_filiale)
+    for info in infos_filiale:
+        for key in info:
+            if key == name_data_stat:
+                return info[key]
+def get_minimum_filiale(employe_data, name_filiale):
+    return get_focus_info_filiale(employe_data, name_filiale, 'salary_minimum')
+def get_maximum_filiale(employe_data, name_filiale):
+    return get_focus_info_filiale(employe_data, name_filiale, 'maximum_salary')
+
+def print_all_get(enterprise_data_static):
+        print(
+        f"{get_filiale_employe(enterprise_data_static, 'TechCorp')=}\n\
+        {get_filiale(enterprise_data_static, 'TechCorp')=}\n\
+        \n{get_filiale_employe_info(enterprise_data_static, 'TechCorp','Helen')=}\n\
+        \n{get_month_salary_employee(enterprise_data_static, 'TechCorp','Helen')=}\
+        \n{get_statistic_filiale(enterprise_data_static, 'TechCorp')=}\
+        \n{get_average_filiale(enterprise_data_static, 'TechCorp')=}\
+        \n{get_minimum_filiale(enterprise_data_static, 'TechCorp')=}\
+        \n{get_maximum_filiale(enterprise_data_static, 'TechCorp')=}")
+def generate_json_enterprise(employe_data):
     employes_data = calcul_salaire(employes_data)
-    for enterprise in employes_data:
-        render_test += f"{enterprise}:\n"
-        for employee in employes_data[enterprise]:
-            render_test += f"{employee} \n"
-            break
-        break
     employes_data_static = calcul_stat_salariales(employes_data)
     print()
-    print(calcul_stats_Enterprise(employes_data_static))
+    enterprise_data_static = calcul_stats_Enterprise(employes_data_static)
+    return enterprise_data_static
+def table_info_filiale_employe_statistic(employe_data_statistic):
+
+    return None
+def main():
+    employes_data = read_file_json('employes-data.json')
+    employe_data_static = generate_json_enterprise(employes_data)
     
+
+
+
 main()
