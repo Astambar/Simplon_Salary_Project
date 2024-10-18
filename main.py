@@ -133,7 +133,9 @@ def get_minimum_filiale(employe_data, name_filiale):
     return get_focus_info_filiale(employe_data, name_filiale, 'salary_minimum')
 def get_maximum_filiale(employe_data, name_filiale):
     return get_focus_info_filiale(employe_data, name_filiale, 'maximum_salary')
-
+def get_all_filiale(enterprise_data_static):
+    all_filiale = None
+    return all_filiale
 def print_all_get(enterprise_data_static):
         print(
         f"{get_filiale_employe(enterprise_data_static, 'TechCorp')=}\n\
