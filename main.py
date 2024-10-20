@@ -89,14 +89,13 @@ def table_info_filiale_employe_statistic(employe_data_statistic):
               name = len_perfect(employ['name'])
               job = len_perfect(employ['job'])
               string_prepare_table += f"{name}| {job}| Salaire mensuel: {employ['monthly_salary']}€\n"
-              print(string_prepare_table)
          string_prepare_table += f"\n"
          string_prepare_table += f"{"=" * 80} \n"
          string_prepare_table += f"Statistiques des salaires pour l'entreprise {filiale}:\n"
          string_prepare_table += f"Salaire moyen: {average_salary}\n"
-         string_prepare_table+= f"Salaire le plus élevé: {maximum_salary}\n"
+         string_prepare_table += f"Salaire le plus élevé: {maximum_salary}\n"
          string_prepare_table += f"Salaire le plus bas:{minimum_salary}\n"
-         string_prepare_table += f"{"=" * 80} + \n"
+         string_prepare_table += f"{"=" * 80} \n"
     print(string_prepare_table)
 
     return None
