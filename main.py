@@ -92,7 +92,7 @@ def table_info_filiale_employe_statistic(employe_data_statistic):
          string_prepare_table += f"\n"
          string_prepare_table += f"{"=" * 80} \n"
          string_prepare_table += f"Statistiques des salaires pour l'entreprise {filiale}:\n"
-         string_prepare_table += f"Salaire moyen: {average_salary}€\n"
+         string_prepare_table += f"Salaire moyen: {average_salary:.2f}€\n"
          string_prepare_table += f"Salaire le plus élevé: {maximum_salary}€\n"
          string_prepare_table += f"Salaire le plus bas:{minimum_salary}€\n"
          string_prepare_table += f"{"=" * 80} \n"
