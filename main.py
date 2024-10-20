@@ -75,33 +75,29 @@ def len_perfect(string, len_default = 24):
      return string
 def table_info_filiale_employe_statistic(employe_data_statistic):
     employe_data_simplify = generate_json_employes_simplify(employe_data_statistic)
-    filiale_data = generate_json_Filiales(employe_data_statistic)
-
-    # Nom Filiale
+    filiale_data= generate_json_Filiales(employe_data_statistic)
+    # Nom Filial
     # Name employe  | rôle | Salary_month
-    string_prepare_table = ""
+    string_prepare_table =  ""
     for filiale in employe_data_simplify:
-        string_prepare_table += f"Entreprise: {filiale}:\n\n"
-        filiale_employes = employe_data_simplify[filiale]
-        average_salary = get_average_filiale(employe_data_statistic, filiale)
-        minimum_salary = get_minimum_filiale(employe_data_statistic, filiale)
-        maximum_salary = get_maximum_filiale(employe_data_statistic, filiale)
-
-        for employ in filiale_employes:
-            name = len_perfect(employ['name'])
-            job = len_perfect(employ['job'])
-            string_prepare_table += f"{name}| {job}| Salaire mensuel: {employ['monthly_salary']}€\n"
-
-        string_prepare_table += "\n"
-        string_prepare_table += "=" * 80 + "\n"
-        string_prepare_table += f"Statistiques des salaires pour l'entreprise {filiale}:\n"
-        string_prepare_table += f"Salaire moyen: {average_salary:.2f}\n"
-        string_prepare_table += f"Salaire le plus élevé: {maximum_salary}\n"
-        string_prepare_table += f"Salaire le plus bas: {minimum_salary}\n"
-        string_prepare_table += "=" * 80 + "\n"
-
+         string_prepare_table += f"Entreprise: {filiale}:\n\n"
+         filiale_employes = employe_data_simplify[filiale]
+         average_salary = get_average_filiale(employe_data_statistic, filiale)
+         minimum_salary = get_minimum_filiale(employe_data_statistic, filiale)
+         maximum_salary = get_maximum_filiale(employe_data_statistic, filiale)
+         for employ in filiale_employes:
+              name = len_perfect(employ['name'])
+              job = len_perfect(employ['job'])
+              string_prepare_table += f"{name}| {job}| Salaire mensuel: {employ['monthly_salary']}€\n"
+              print(string_prepare_table)
+         string_prepare_table += f"\n"
+         string_prepare_table += f"{"=" * 80} \n"
+         string_prepare_table += f"Statistiques des salaires pour l'entreprise {filiale}:\n"
+         string_prepare_table += f"Salaire moyen: {average_salary}\n"
+         string_prepare_table+= f"Salaire le plus élevé: {maximum_salary}\n"
+         string_prepare_table += f"Salaire le plus bas:{minimum_salary}\n"
+         string_prepare_table += f"{"=" * 80} + \n"
     print(string_prepare_table)
-
 
     return None
 def main():
